@@ -19,7 +19,7 @@ This helps agents "learn" about your project over time, improving their effectiv
 
 2.  **Create or Update `AGENTS.md`:**
     * You should have an `AGENTS.md` file (or a similarly named file) in the root of your repository that serves as the primary guide for AI agents interacting with your project.
-    * Copy the "Agent Memory Layer" section from the [provided generic AGENTS.md template](link_to_generic_agents_md_or_paste_content_here) into your project's `AGENTS.md`.
+    * Copy the "Agent Memory Layer" section from the [provided generic AGENTS.md template](AGENTS.md) into your project's `AGENTS.md`.
     * **Crucially, customize the introductory parts of your `AGENTS.md`** to be specific to your project (e.g., replace `[Your Project Name]` with your actual project name). The Agent Memory Layer section itself is designed to be mostly generic.
 
 3.  **Agent Interaction:**
