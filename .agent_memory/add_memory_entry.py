@@ -26,6 +26,7 @@ def main() -> None:
     parser.add_argument("observation", help="Summary of the outcome")
     parser.add_argument("reflection", help="What to improve next time")
     parser.add_argument("--tags", nargs="*", default=[], help="Optional tags")
+    parser.add_argument("--task-id", help="ID of related task")
     parser.add_argument(
         "--memory-dir",
         type=Path,
@@ -48,6 +49,8 @@ def main() -> None:
         "reflection": args.reflection,
         "tags": args.tags,
     }
+    if args.task_id:
+        entry["task_id"] = args.task_id
 
     schema = load_schema(schema_path)
     validate(instance=entry, schema=schema)

@@ -9,8 +9,12 @@ Agents should review the most recent relevant entries before modifying files and
 Use `.agent_memory/memory_cli.py add` to append a new memory record after each run:
 
 ```bash
-.agent_memory/memory_cli.py add "<context>" "<observation>" "<reflection>" --tags tag1 tag2 --memory-dir .agent_memory
+.agent_memory/memory_cli.py add "<context>" "<observation>" "<reflection>" \
+  --tags tag1 tag2 --task-id <task_id> --memory-dir .agent_memory
 ```
+
+If the entry relates to a tracked task, supply `--task-id` with the task's ID so
+the memory record links back to the task list. This field is optional.
 
 All memory entries must conform to `schema.json`. `.agent_memory/memory_cli.py add`
 loads this schema and validates each record before writing it. The query and

@@ -9,7 +9,8 @@
     "context": {"type": "string", "description": "short description of files or task"},
     "observation": {"type": "string", "description": "summary of outcome"},
     "reflection": {"type": "string", "description": "what to improve next time"},
-    "tags": {"type": "array", "items": {"type": "string"}}
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "task_id": {"type": "string", "description": "ID of related task"}
   },
   "required": ["ts", "agent", "run_id", "context", "observation", "reflection"],
   "additionalProperties": false
