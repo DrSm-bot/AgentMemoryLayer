@@ -59,7 +59,3 @@ Refer to the "Agent Guide: Using the Agent Memory Layer" section in your project
 ## Dependencies
 
 The `memory_cli.py` script is designed to be lightweight. It primarily uses standard Python libraries. Ensure your environment or the agent's execution environment has Python installed.
-
-## Contributing to this Layer (Optional)
-
-If you make general improvements to the Agent Memory Layer scripts or documentation that could benefit other users, consider sharing them back!
