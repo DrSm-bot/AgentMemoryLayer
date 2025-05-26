@@ -1,0 +1,20 @@
+[
+  {
+    "id": "example-task-1",
+    "description": "Implement user authentication system",
+    "status": "in_progress",
+    "created_at": "2025-05-26T10:00:00.000000"
+  },
+  {
+    "id": "example-task-2", 
+    "description": "Add comprehensive test coverage",
+    "status": "open",
+    "created_at": "2025-05-26T10:15:00.000000"
+  },
+  {
+    "id": "example-task-3",
+    "description": "Update project documentation",
+    "status": "finished",
+    "created_at": "2025-05-26T09:30:00.000000"
+  }
+]
