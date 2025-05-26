@@ -46,7 +46,7 @@ Refer to the "Agent Guide: Using the Agent Memory Layer" section in your project
     * List tasks: `python .agent_memory/memory_cli.py task list`
     * List notes: `python .agent_memory/memory_cli.py note list`
 2.  **After completing a task:**
-    * Add memory entry: `python .agent_memory/memory_cli.py add "Context" "Observation" "Reflection" --tags "example"`
+    * Add memory entry: `python .agent_memory/memory_cli.py add "Context" "Observation" "Reflection" --tags "example" --task-id <task_id>`
     * Update task status: `python .agent_memory/memory_cli.py task update <id> --status "finished"`
     * Add notes if needed: `python .agent_memory/memory_cli.py note add "Useful persistent info"`
 

@@ -32,6 +32,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     add_p.add_argument("observation")
     add_p.add_argument("reflection")
     add_p.add_argument("--tags", nargs="*", default=[])
+    add_p.add_argument("--task-id", help="ID of related task")
     add_p.add_argument("--memory-dir", type=Path, default=DEFAULT_MEMORY_DIR)
 
     query_p = sub.add_parser("query", help="Query memory entries")
@@ -96,6 +97,8 @@ def handle_add(args: argparse.Namespace) -> None:
         "reflection": args.reflection,
         "tags": args.tags,
     }
+    if args.task_id:
+        entry["task_id"] = args.task_id
 
     schema = add_mod.load_schema(schema_path)
     validate(instance=entry, schema=schema)

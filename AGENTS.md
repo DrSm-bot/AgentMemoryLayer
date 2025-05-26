@@ -36,10 +36,12 @@ The Agent Memory Layer, located in the `.agent_memory/` directory, is a dedicate
 
 * **Add a New Memory Entry:** Log what you did, what the outcome was, and any learnings.
     ```bash
-    python .agent_memory/memory_cli.py add "Brief context of the task" "Summary of what was done/observed" "Reflections or what to improve next time" --tags "relevant_tag" "another_tag"
+    python .agent_memory/memory_cli.py add "Brief context of the task" \
+      "Summary of what was done/observed" "Reflections or what to improve next time" \
+      --tags "relevant_tag" "another_tag" --task-id <task_id>
     ```
     * This creates a timestamped JSONL entry in `.agent_memory/entries/`.
-    * Entries include `ts` (timestamp), `agent`, `run_id`, `context`, `observation`, `reflection`, and `tags`.
+    * Entries include `ts` (timestamp), `agent`, `run_id`, `context`, `observation`, `reflection`, `tags`, and optionally `task_id` linking to a task.
     * Memory entries are validated against `.agent_memory/schema.json`.
 * **Update Task Status:** Mark your current task appropriately (e.g., "finished").
     ```bash
