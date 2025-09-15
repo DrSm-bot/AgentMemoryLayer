@@ -1,7 +1,6 @@
 import json
 import shutil
 from pathlib import Path
-import tempfile
 
 import pytest
 
@@ -12,10 +11,6 @@ root = Path(__file__).resolve().parents[1]
 spec_cli = importlib.util.spec_from_file_location('memory_cli', root / 'memory_cli.py')
 memory_cli = importlib.util.module_from_spec(spec_cli)
 spec_cli.loader.exec_module(memory_cli)
-
-spec_add = importlib.util.spec_from_file_location('add_memory_entry', root / 'add_memory_entry.py')
-add_entry = importlib.util.module_from_spec(spec_add)
-spec_add.loader.exec_module(add_entry)
 
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / 'schema.json'
 
