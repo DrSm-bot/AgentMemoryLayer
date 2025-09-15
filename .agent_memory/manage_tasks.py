@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
 import uuid
@@ -12,11 +13,16 @@ import uuid
 DEFAULT_MEMORY_DIR = Path(__file__).resolve().parent
 TASK_FILE = DEFAULT_MEMORY_DIR / "tasks.json"
 
+logger = logging.getLogger(__name__)
+
 
 def load_tasks(task_file: Path = TASK_FILE) -> list[dict]:
     if task_file.exists():
-        with task_file.open("r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with task_file.open("r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            logger.warning("Failed to decode JSON from %s; returning empty list.", task_file)
     return []
 
 
