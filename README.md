@@ -17,12 +17,19 @@ This helps agents "learn" about your project over time, improving their effectiv
 1.  **Copy to Your Repository:**
     * Copy the entire `.agent_memory` folder (including this `README.md`, `memory_cli.py`, `schema.json`, and the empty `entries/`, `tasks.json`, and `notes.json` files) into the root of your project repository.
 
-2.  **Create or Update `AGENTS.md`:**
+2.  **Install Dependencies:**
+    * From your project root, install the required Python packages:
+
+      ```bash
+      python -m pip install -r requirements.txt
+      ```
+
+3.  **Create or Update `AGENTS.md`:**
     * You should have an `AGENTS.md` file (or a similarly named file) in the root of your repository that serves as the primary guide for AI agents interacting with your project.
     * Copy the "Agent Memory Layer" section from the [provided generic AGENTS.md template](AGENTS.md) into your project's `AGENTS.md`.
     * **Crucially, customize the introductory parts of your `AGENTS.md`** to be specific to your project (e.g., replace `[Your Project Name]` with your actual project name). The Agent Memory Layer section itself is designed to be mostly generic.
 
-3.  **Agent Interaction:**
+4.  **Agent Interaction:**
     * Instruct your AI agents to refer to the `AGENTS.md` file in your repository for guidelines on how to use the memory layer.
     * The primary interaction point is the `memory_cli.py` script located within this `.agent_memory` directory.
 
@@ -58,4 +65,15 @@ Refer to the "Agent Guide: Using the Agent Memory Layer" section in your project
 
 ## Dependencies
 
-The `memory_cli.py` script is designed to be lightweight. It primarily uses standard Python libraries. Ensure your environment or the agent's execution environment has Python installed.
+The Agent Memory Layer relies on a small set of Python packages beyond the standard library:
+
+* [`jsonschema` (>=4.0,<5)](https://pypi.org/project/jsonschema/) – validates memory entries against `schema.json` before they are persisted.
+* [`pytest`](https://pypi.org/project/pytest/) – optional, used when running the automated tests in `.agent_memory/tests/`.
+
+Install the runtime dependencies with:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+If you plan to run the test suite, also install `pytest` (for example, `python -m pip install pytest`).
