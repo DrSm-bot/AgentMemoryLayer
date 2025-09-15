@@ -20,7 +20,6 @@ import manage_tasks as task_mod
 import manage_notes as note_mod
 
 DEFAULT_MEMORY_DIR = Path(__file__).resolve().parent
-DEFAULT_ENTRIES_DIR = DEFAULT_MEMORY_DIR / "entries"
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -41,12 +40,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     query_p.add_argument("--until")
     query_p.add_argument("--last", type=int)
     query_p.add_argument("--search")
-    query_p.add_argument("--memory-dir", type=Path, default=DEFAULT_ENTRIES_DIR)
+    query_p.add_argument("--memory-dir", type=Path, default=DEFAULT_MEMORY_DIR)
 
     sum_p = sub.add_parser("summarize", help="Summarize memory entries")
     sum_p.add_argument("--since", required=True)
     sum_p.add_argument("--until", required=True)
-    sum_p.add_argument("--memory-dir", type=Path, default=DEFAULT_ENTRIES_DIR)
+    sum_p.add_argument("--memory-dir", type=Path, default=DEFAULT_MEMORY_DIR)
     sum_p.add_argument("--output", type=Path)
 
     prune_p = sub.add_parser("prune", help="Prune memory entries")
@@ -55,7 +54,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--older-than", type=int)
     g.add_argument("--keep-last", type=int)
     prune_p.add_argument("--dry-run", action="store_true")
-    prune_p.add_argument("--memory-dir", type=Path, default=DEFAULT_ENTRIES_DIR)
+    prune_p.add_argument("--memory-dir", type=Path, default=DEFAULT_MEMORY_DIR)
 
     task_p = sub.add_parser("task", help="Manage task list")
     task_p.add_argument("--memory-dir", type=Path, default=DEFAULT_MEMORY_DIR)
@@ -107,8 +106,20 @@ def handle_add(args: argparse.Namespace) -> None:
         f.write(json.dumps(entry) + "\n")
 
 
+def resolve_entries_dir(memory_dir: Path) -> Path:
+    if memory_dir.name == "entries":
+        return memory_dir
+    entries_dir = memory_dir / "entries"
+    if entries_dir.exists():
+        return entries_dir
+    if any(memory_dir.glob("*.jsonl")):
+        return memory_dir
+    return entries_dir
+
+
 def handle_query(args: argparse.Namespace) -> None:
-    entries = query_mod.load_entries(args.memory_dir)
+    entries_dir = resolve_entries_dir(args.memory_dir)
+    entries = query_mod.load_entries(entries_dir)
     entries = query_mod.filter_entries(
         entries, args.tags, args.since, args.until, args.search
     )
@@ -119,7 +130,8 @@ def handle_query(args: argparse.Namespace) -> None:
 
 
 def handle_summarize(args: argparse.Namespace) -> None:
-    entries = summary_mod.load_entries(args.memory_dir)
+    entries_dir = resolve_entries_dir(args.memory_dir)
+    entries = summary_mod.load_entries(entries_dir)
     entries = summary_mod.filter_entries(entries, args.since, args.until)
     summary = summary_mod.summarize(entries, args.since, args.until)
     output_path = args.output
@@ -136,7 +148,10 @@ def handle_summarize(args: argparse.Namespace) -> None:
 
 
 def handle_prune(args: argparse.Namespace) -> None:
-    files = prune_mod.determine_files_to_delete(args)
+    entries_dir = resolve_entries_dir(args.memory_dir)
+    prune_args = argparse.Namespace(**vars(args))
+    prune_args.memory_dir = entries_dir
+    files = prune_mod.determine_files_to_delete(prune_args)
     if not files:
         print("No entries to delete")
         return
